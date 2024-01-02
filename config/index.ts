@@ -1,0 +1,1 @@
+export const URL_API = "https://api.mercadolibre.com/site/MLA/" as string;  

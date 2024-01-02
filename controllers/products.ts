@@ -1,5 +1,6 @@
 import {Request } from "express";
-import { URL_API } from "..";
+import { URL_API } from "../config";
+import { StatusCodes } from "http-status-codes";
 
 
 // Modelo 
@@ -21,7 +22,7 @@ export type Results = {
 
 }[] 
 
-export let object: {message: string, data: Object}
+export let object: {success: boolean, data: Object}
 
 export const getProduct = async (req: Request, rest: Response) => {
     try{
@@ -32,9 +33,19 @@ export const getProduct = async (req: Request, rest: Response) => {
                         results: Results
                     }>)
             // mostrar resultados
-            res.status(StatusCodes.OK || StatusCodes.CREATED).json()
-                    object.data = res
-    } catch (error) {
+            res.status(StatusCodes.OK || StatusCodes.CREATED).json({
+                object: {
+                    results,
+                    success: true,
+                },
+            });
+
+    } catch (error: unknown) {
+        const err = error as Error
+        console.log(`Error get Product Error`, err.message)
+        rest.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: err.message
+        });
 
     }
-}
+};
