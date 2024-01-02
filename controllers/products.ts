@@ -1,4 +1,4 @@
-import {Request } from "express";
+import {Request, Response } from "express";
 import { URL_API } from "../config";
 import { StatusCodes } from "http-status-codes";
 
@@ -24,7 +24,7 @@ export type Results = {
 
 export let object: {success: boolean, data: Object}
 
-export const getProduct = async (req: Request, rest: Response) => {
+export const getProduct = async (req: Request, res: Response) => {
     try{
 
         const url = URL_API + `search?q=${req.params.q}`;
@@ -43,7 +43,7 @@ export const getProduct = async (req: Request, rest: Response) => {
     } catch (error: unknown) {
         const err = error as Error
         console.log(`Error get Product Error`, err.message)
-        rest.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             message: err.message
         });
 

@@ -4,6 +4,8 @@ import express, {Express, Request, Response} from "express";
 import * as dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors"
+import router from "./routers/index.router";
+
 
 dotenv.config(); //variable de entorno
 
@@ -21,6 +23,9 @@ server.use(helmet())
 
 
 //import router
+server.use("/api/v1/", router);
+
+
 server.get("/", (req: Request, res: Response) => {
     res.send(`[server]: Server is running at http://localhost:${PORT}`);
 })
